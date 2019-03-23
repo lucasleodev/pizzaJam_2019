@@ -24,8 +24,11 @@ public class EnemyIA : MonoBehaviour
 
     void EnemyMovement()
     {
-        transform.LookAt(playerPosition.transform.position);
-        transform.position += transform.forward * enemySpeed * Time.deltaTime;
+        if (playerPosition)
+        {
+            transform.LookAt(playerPosition.transform.position);
+            transform.position += transform.forward * enemySpeed * Time.deltaTime;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

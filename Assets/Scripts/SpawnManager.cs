@@ -6,6 +6,8 @@ public class SpawnManager : MonoBehaviour
 {
     public GameObject enemy;
     public bool isGameOver = false;
+    private int posX, posY;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,8 +29,10 @@ public class SpawnManager : MonoBehaviour
     {
         while (!isGameOver)
         {
-            yield return new WaitForSeconds(5f);
-            Instantiate(enemy, new Vector3(7, 1, 7), Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(5f,12f));
+            posX = Random.Range(-7, 7);
+            posY = Random.Range(-7, 7);
+            Instantiate(enemy, new Vector3(posX, 1, posY), Quaternion.identity);
         }
     }
 
@@ -36,5 +40,11 @@ public class SpawnManager : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(9, 35) * Time.deltaTime);
 
+    }
+
+    void RandomEnemyPos()
+    {
+        posX = Random.Range(-7, 7);
+        posY = Random.Range(-7, 7);
     }
 }

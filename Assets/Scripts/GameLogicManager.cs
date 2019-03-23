@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class GameLogicManager : MonoBehaviour
 {
-    //public GameObject turbo;
-    //public GameObject tripleShot;
+
 
     public Text scoreUI;
     public int score;
@@ -15,21 +14,16 @@ public class GameLogicManager : MonoBehaviour
 
     public SpawnManager spawn;
 
-    /*
-    public GameObject tripleShoot;
-    public GameObject turbo;
-    public GameObject shield;
-    */
     // Start is called before the first frame update
     void Start()
     {
-        
+        spawn.StartSpawn(isGameOver);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //spawn.StartSpawn(isGameOver);
+
     }
 
 }
