@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyIA : MonoBehaviour
 {
+    public AudioSource audio;
+    public AudioClip explode;
     public GameObject playerPosition;
     public float enemySpeed = 4f;
 
@@ -11,6 +13,7 @@ public class EnemyIA : MonoBehaviour
     void Start()
     {
         playerPosition = GameObject.Find("Player");
+        audio = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -29,6 +32,7 @@ public class EnemyIA : MonoBehaviour
     {
         if (collision.gameObject.tag != "InvisibleWall")
         {
+            audio.PlayOneShot(explode, 0.7f);
             Destroy(this.gameObject);
         }
     }
