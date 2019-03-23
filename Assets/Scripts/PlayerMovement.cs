@@ -7,15 +7,16 @@ public class PlayerMovement : MonoBehaviour
     //THE DOOM - Domination OffTerrain OnTheGo Maquinary, AKA Heavy Dog
 
     public float _normalSpeed = 5f;
-    public AudioSource audio;
+    public new AudioSource audio;
     public AudioClip shootSound, explodeSound;
     public GameObject bullet;
     public GameObject bulletExit;
-    public int playerLifes = 3;
+    public int playerArmor = 100;
     public bool shieldActive = false;
     public bool turboActive = false;
     public bool tripleShootActive = false;
 
+    GameLogicManager manager;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,11 @@ public class PlayerMovement : MonoBehaviour
         TankMovement();
         Shoot();
         DestroyTank();
+    }
+
+    void GetPowerUps()
+    {
+
     }
 
     void TankMovement()
@@ -60,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.transform.tag == "Enemy")
         {
-            playerLifes--;
+            playerArmor-= 10;
             Destroy(collision.gameObject);
         }
 
@@ -68,16 +74,28 @@ public class PlayerMovement : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        if (collision.transform.tag == "Powerup")
+        {
+            Debug.Log(collision.transform.name);
+            Destroy(collision.gameObject);
+        }
+    }
+
+    public int ReturnArmorValue()
+    {
+        return playerArmor;
     }
 
     public void DestroyTank()
     {
-        if(playerLifes == 0)
+        if(playerArmor == 0)
         {
             audio.PlayOneShot(explodeSound);
             Destroy(this.gameObject);
         }
     }
+
     IEnumerator ShootCooldown()
     {
         audio.PlayOneShot(shootSound, 0.45f);

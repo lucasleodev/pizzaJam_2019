@@ -8,6 +8,8 @@ TagManager:
   - PlayerCannon
   - Enemy
   - PostProcessing
+  - Powerup
+  - Manager
   layers:
   - Default
   - TransparentFX
