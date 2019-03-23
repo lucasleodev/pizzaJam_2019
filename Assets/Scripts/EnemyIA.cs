@@ -15,7 +15,7 @@ public class EnemyIA : MonoBehaviour
     void Start()
     {
         playerPosition = GameObject.Find("Player");
-        audio = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
+        audio = GameObject.FindGameObjectWithTag("Manager").GetComponent<AudioSource>();
         manager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameLogicManager>();
     }
 
@@ -36,11 +36,11 @@ public class EnemyIA : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag != "InvisibleWall")
+        if (collision.gameObject.tag != "InvisibleWall" && collision.gameObject.tag != "Powerup")
         {
             audio.PlayOneShot(explode, 0.7f);
             manager.AddScore();
-            Destroy(this.gameObject);            
+            Destroy(this.gameObject);
         }
     }
 }

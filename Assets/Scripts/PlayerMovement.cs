@@ -6,22 +6,26 @@ public class PlayerMovement : MonoBehaviour
 {
     //THE DOOM - Domination OffTerrain OnTheGo Maquinary, AKA Heavy Dog
 
-    public float _normalSpeed = 5f;
+    public float _normalSpeed = 3f;
     public new AudioSource audio;
     public AudioClip shootSound, explodeSound;
     public GameObject bullet;
-    public GameObject bulletExit;
-    public int playerArmor = 100;
+    public GameObject singleShot,leftTriple,centerTriple,rigthTriple;
+    public GameObject shieldField;
+    public float playerArmor = 100;
     public bool shieldActive = false;
     public bool turboActive = false;
     public bool tripleShootActive = false;
+    bool canShoot = true;
+
 
     GameLogicManager manager;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        audio = GameObject.FindGameObjectWithTag("Manager").GetComponent<AudioSource>();
+        shieldField.SetActive(false);
     }
 
     // Update is called once per frame
@@ -32,9 +36,29 @@ public class PlayerMovement : MonoBehaviour
         DestroyTank();
     }
 
-    void GetPowerUps()
+    void GetPowerUps(string name)
     {
-
+        switch (name)
+        {
+            case "Shield(Clone)":
+                if (!shieldActive)
+                {
+                    StartCoroutine(TurnOnShield());
+                }
+                break;
+            case "Turbo(Clone)":
+                if (!turboActive)
+                {
+                    StartCoroutine(TurnOnTurbo());
+                }
+                break;
+            case "TripleShoot(Clone)":
+                if (!tripleShootActive)
+                {
+                    StartCoroutine(TurnOnTripleShoot());
+                }
+                break;
+        }
     }
 
     void TankMovement()
@@ -58,38 +82,21 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(ShootCooldown());
+            if(canShoot)
+            {
+                StartCoroutine(ShootCooldown());
+            }
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.tag == "Enemy")
-        {
-            playerArmor-= 10;
-            Destroy(collision.gameObject);
-        }
-
-        if (collision.transform.tag == "Bullet")
-        {
-            Destroy(this.gameObject);
-        }
-
-        if (collision.transform.tag == "Powerup")
-        {
-            Debug.Log(collision.transform.name);
-            Destroy(collision.gameObject);
-        }
-    }
-
-    public int ReturnArmorValue()
+    public float ReturnArmorValue()
     {
         return playerArmor;
     }
 
     public void DestroyTank()
     {
-        if(playerArmor == 0)
+        if (playerArmor == 0)
         {
             audio.PlayOneShot(explodeSound);
             Destroy(this.gameObject);
@@ -98,8 +105,80 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator ShootCooldown()
     {
-        audio.PlayOneShot(shootSound, 0.45f);
-        Instantiate(bullet, bulletExit.transform.position, bulletExit.transform.rotation);
-        yield return new WaitForSeconds(5f * Time.deltaTime);
+        while (canShoot)
+        {
+            audio.PlayOneShot(shootSound, 0.45f);
+            if (!tripleShootActive)
+            {
+                Instantiate(bullet, singleShot.transform.position, singleShot.transform.rotation);
+            }
+            else
+            {
+                Instantiate(bullet, leftTriple.transform.position, leftTriple.transform.rotation);
+                Instantiate(bullet, centerTriple.transform.position, centerTriple.transform.rotation);
+                Instantiate(bullet, rigthTriple.transform.position, rigthTriple.transform.rotation);
+            }
+            canShoot = false;
+            yield return new WaitForSeconds(2f);
+            canShoot = true;
+        }
     }
+
+    IEnumerator TurnOnTripleShoot()
+    {
+        tripleShootActive = true;
+        while (tripleShootActive)
+        {
+            yield return new WaitForSeconds(15f);
+            tripleShootActive = false;
+        }
+    }
+
+    IEnumerator TurnOnTurbo()
+    {
+        turboActive = true;
+        while (turboActive)
+        {
+            _normalSpeed *= 2f;
+            yield return new WaitForSeconds(15f);
+            _normalSpeed = 3f;
+            turboActive = false;
+        }
+    }
+
+    IEnumerator TurnOnShield()
+    {
+        shieldActive = true;
+        while (shieldActive)
+        {
+            shieldField.SetActive(true);
+            yield return new WaitForSeconds(15f);
+            shieldField.SetActive(false);
+            shieldActive = false;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "Enemy")
+        {
+            if (!shieldActive)
+            {
+                playerArmor -= 10;
+                Destroy(collision.gameObject);
+            }
+            else
+            {
+                Destroy(collision.gameObject);
+            }
+        }
+
+        if (collision.transform.tag == "Powerup")
+        {
+            Debug.Log(collision.transform.name);
+            GetPowerUps(collision.transform.name);
+            Destroy(collision.gameObject);
+        }
+    }
+
 }
