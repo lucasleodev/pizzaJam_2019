@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3800634839973583134}
   - component: {fileID: 7838032819285397882}
   - component: {fileID: 7902778670038217997}
+  - component: {fileID: 8246333259880253970}
   m_Layer: 0
   m_Name: Turbo
   m_TagString: Powerup
@@ -771,3 +772,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.6972051, z: 1}
   m_Center: {x: 0.5, y: 0.5486026, z: -0.5}
+--- !u!114 &8246333259880253970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4278194179586683383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25001cea3db0cb40b387b058e29c42e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

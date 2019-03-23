@@ -22,8 +22,9 @@ public class GameLogicManager : MonoBehaviour
 
     public Image tripleShootPU, turboPU, shieldPU, tripleBG, turboBG, shieldBG;
 
+    public ParticleSystem explosion;
+
     float shieldTime = 0f, tripleTime = 0f, turboTime = 0f;
-    float startTime = 0f;
     float maxPowerUpTime = 15f;
 
     // Start is called before the first frame update
@@ -38,8 +39,6 @@ public class GameLogicManager : MonoBehaviour
     {
         UpdateArmor();
         UpdateScore();
-        //ManagePowerUpsUI();
-        StartCoroutine(PowerUPTimer());
     }
 
     public void AddScore()
@@ -58,62 +57,25 @@ public class GameLogicManager : MonoBehaviour
         scoreUI.text = score.ToString();
     }
 
-    void ManagePowerUpsUI()
+    void PauseMenu()
     {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Time.timeScale = 0f;
+        }
+        if (Time.timeScale == 0 && Input.GetKeyDown(KeyCode.B))
+        {
+            Time.timeScale = 1f;
+        }
+        if (Time.timeScale == 0 && Input.GetKeyDown(KeyCode.M))
+        {
 
-        if (player.shieldActive)
-        {
-            shieldTime += Time.deltaTime;
-            var percent = shieldTime / maxPowerUpTime;
-            shieldPU.fillAmount = Mathf.Lerp(1, 0, percent);
-        }
-        else
-        {
-            startTime = 0f;
-        }
-        if (player.turboActive)
-        {
-            turboTime += Time.deltaTime;
-            var percent = turboTime / maxPowerUpTime;
-            turboPU.fillAmount = Mathf.Lerp(1, 0, percent);
-        }
-        else
-        {
-            startTime = 0f;
-        }
-        if (player.tripleShootActive)
-        {
-            tripleTime += Time.deltaTime;
-            var percent = tripleTime / maxPowerUpTime;
-            tripleShootPU.fillAmount = Mathf.Lerp(1, 0, percent);
-        }
-        else
-        {
-            startTime = 0f;
         }
     }
 
-    IEnumerator PowerUPTimer()
+    public void MakeExplode(Transform pos)
     {
-
-        if (player.shieldActive)
-        {
-            ManagePowerUpsUI();
-            yield return new WaitForSeconds(maxPowerUpTime);
-            shieldTime = 0;
-        }
-        if (player.turboActive)
-        {
-            ManagePowerUpsUI();
-            yield return new WaitForSeconds(maxPowerUpTime);
-            turboTime = 0;
-        }
-        if (player.tripleShootActive)
-        {
-            ManagePowerUpsUI();
-            yield return new WaitForSeconds(maxPowerUpTime);
-            tripleTime = 0;
-        }
+        Instantiate(explosion, pos.position, Quaternion.identity);
+        explosion.Play();
     }
-
 }

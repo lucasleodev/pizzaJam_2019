@@ -34,10 +34,16 @@ public class EnemyIA : MonoBehaviour
         }
     }
 
+    public Transform enemyExplodePosition()
+    {
+        return transform;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag != "InvisibleWall" && collision.gameObject.tag != "Powerup")
+        if (collision.gameObject.tag != "InvisibleWall" && collision.gameObject.tag != "Powerup" && collision.gameObject.tag != "Enemy")
         {
+            manager.MakeExplode(enemyExplodePosition());
             audio.PlayOneShot(explode, 0.7f);
             manager.AddScore();
             Destroy(this.gameObject);

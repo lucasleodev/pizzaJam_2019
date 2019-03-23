@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     bool canShoot = true;
 
 
-    GameLogicManager manager;
+    public GameLogicManager manager;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
             case "Shield(Clone)":
                 if (!shieldActive)
                 {
+                    shieldActive = true;
                     StartCoroutine(TurnOnShield());
                 }
                 break;
@@ -67,12 +68,6 @@ public class PlayerMovement : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
 
         //move the tank
-        if (Input.GetKey(KeyCode.RightControl))
-        {
-            transform.Translate(transform.right * horizontal * Time.deltaTime * _normalSpeed);
-            transform.Translate(transform.forward * vertical * Time.deltaTime * _normalSpeed);
-        }
-
         Vector3 newPos = new Vector3(horizontal, 0.0f, vertical);
         transform.LookAt(newPos + transform.position);
         transform.Translate(newPos * _normalSpeed * Time.deltaTime, Space.World);
@@ -98,9 +93,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if (playerArmor == 0)
         {
+            manager.MakeExplode(tankExplodePosition());
             audio.PlayOneShot(explodeSound);
             Destroy(this.gameObject);
         }
+    }
+
+    public Transform tankExplodePosition()
+    {
+        return transform;
     }
 
     IEnumerator ShootCooldown()
@@ -124,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator TurnOnTripleShoot()
     {
         tripleShootActive = true;
-        while (tripleShootActive)
+        if (tripleShootActive)
         {
             yield return new WaitForSeconds(15f);
             tripleShootActive = false;
@@ -134,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator TurnOnTurbo()
     {
         turboActive = true;
-        while (turboActive)
+        if (turboActive)
         {
             _normalSpeed *= 2f;
             yield return new WaitForSeconds(15f);
@@ -145,14 +146,11 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator TurnOnShield()
     {
-        shieldActive = true;
-        while (shieldActive)
-        {
-            shieldField.SetActive(true);
-            yield return new WaitForSeconds(15f);
-            shieldField.SetActive(false);
-            shieldActive = false;
-        }
+        shieldField.SetActive(true);
+        yield return new WaitForSeconds(15f);
+        shieldField.SetActive(false);
+        shieldActive = false;
+
     }
 
     private void OnCollisionEnter(Collision collision)
