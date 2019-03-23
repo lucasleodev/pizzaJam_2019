@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
     //THE DOOM - Domination OffTerrain OnTheGo Maquinary, AKA Heavy Dog
 
     public float _normalSpeed = 5f;
+    public AudioSource audio;
+    public AudioClip shootSound, explodeSound;
     public GameObject bullet;
     public GameObject bulletExit;
     public int playerLifes = 3;
@@ -72,11 +74,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if(playerLifes == 0)
         {
+            audio.PlayOneShot(explodeSound);
             Destroy(this.gameObject);
         }
     }
     IEnumerator ShootCooldown()
     {
+        audio.PlayOneShot(shootSound, 0.45f);
         Instantiate(bullet, bulletExit.transform.position, bulletExit.transform.rotation);
         yield return new WaitForSeconds(5f * Time.deltaTime);
     }
