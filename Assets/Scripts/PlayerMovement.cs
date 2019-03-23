@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public new AudioSource audio;
     public AudioClip shootSound, explodeSound;
     public GameObject bullet;
-    public GameObject singleShot,leftTriple,centerTriple,rigthTriple;
+    public GameObject singleShot, leftTriple, centerTriple, rigthTriple;
     public GameObject shieldField;
     public float playerArmor = 100;
     public bool shieldActive = false;
@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if(canShoot)
+            if (canShoot)
             {
                 StartCoroutine(ShootCooldown());
             }
@@ -105,23 +105,20 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator ShootCooldown()
     {
-        while (canShoot)
+        audio.PlayOneShot(shootSound, 0.45f);
+        if (!tripleShootActive)
         {
-            audio.PlayOneShot(shootSound, 0.45f);
-            if (!tripleShootActive)
-            {
-                Instantiate(bullet, singleShot.transform.position, singleShot.transform.rotation);
-            }
-            else
-            {
-                Instantiate(bullet, leftTriple.transform.position, leftTriple.transform.rotation);
-                Instantiate(bullet, centerTriple.transform.position, centerTriple.transform.rotation);
-                Instantiate(bullet, rigthTriple.transform.position, rigthTriple.transform.rotation);
-            }
-            canShoot = false;
-            yield return new WaitForSeconds(2f);
-            canShoot = true;
+            Instantiate(bullet, singleShot.transform.position, singleShot.transform.rotation);
         }
+        else
+        {
+            Instantiate(bullet, leftTriple.transform.position, leftTriple.transform.rotation);
+            Instantiate(bullet, centerTriple.transform.position, centerTriple.transform.rotation);
+            Instantiate(bullet, rigthTriple.transform.position, rigthTriple.transform.rotation);
+        }
+        canShoot = false;
+        yield return new WaitForSeconds(0.7f);
+        canShoot = true;
     }
 
     IEnumerator TurnOnTripleShoot()

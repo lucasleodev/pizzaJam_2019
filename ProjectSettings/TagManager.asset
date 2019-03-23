@@ -7,7 +7,6 @@ TagManager:
   - InvisibleWall
   - PlayerCannon
   - Enemy
-  - PostProcessing
   - Powerup
   - Manager
   layers:

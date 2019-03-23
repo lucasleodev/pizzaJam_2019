@@ -27,4 +27,10 @@ public class Bullet : MonoBehaviour
         Debug.Log("Destroyed by: " + collision.transform.tag);
         Destroy(this.gameObject);
     }
+    
+    private void OnBecameInvisible()
+    {
+        Destroy(this.gameObject);
+    }
+
 }
