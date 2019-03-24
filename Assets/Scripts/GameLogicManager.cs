@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameLogicManager : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class GameLogicManager : MonoBehaviour
 
     public Image armor;
 
-    public bool isGameOver = false;
+    public bool isGameOver = false, isPaused = false;
 
     public SpawnManager spawn;
 
@@ -27,11 +28,12 @@ public class GameLogicManager : MonoBehaviour
     float shieldTime = 0f, tripleTime = 0f, turboTime = 0f;
     float maxPowerUpTime = 15f;
 
-    public GameObject pauseMenuUI;
+    public GameObject pauseMenuUI, gameOverUI;
 
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1f;
         spawn.StartSpawn(isGameOver);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
     }
@@ -43,6 +45,7 @@ public class GameLogicManager : MonoBehaviour
         UpdateScore();
         PopulatePowerUp_UI();
         PauseMenu();
+        GameOver();
     }
 
     public void AddScore()
@@ -63,19 +66,21 @@ public class GameLogicManager : MonoBehaviour
 
     void PauseMenu()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) && !isGameOver)
         {
             Time.timeScale = 0f;
-            //pauseMenuUI.SetActive(true);
+            pauseMenuUI.SetActive(true);
+            isPaused = true;
         }
-        if (Time.timeScale == 0 && Input.GetKeyDown(KeyCode.B))
+        if (Time.timeScale == 0 && Input.GetKeyDown(KeyCode.B) && isPaused)
         {
             Time.timeScale = 1f;
             pauseMenuUI.SetActive(false);
+            isPaused = false;
         }
-        if (Time.timeScale == 0 && Input.GetKeyDown(KeyCode.M))
+        if (Time.timeScale == 0 && Input.GetKeyDown(KeyCode.M) && isPaused)
         {
-
+            SceneManager.LoadScene(0);
         }
     }
 
@@ -83,6 +88,24 @@ public class GameLogicManager : MonoBehaviour
     {
         Instantiate(explosion, pos.position, Quaternion.identity);
         explosion.Play();
+    }
+
+    public void GameOver()
+    {
+        if(isGameOver)
+        {
+            Time.timeScale = 0f;
+            gameOverUI.SetActive(true);
+
+            if (Time.timeScale == 0 && Input.GetKeyDown(KeyCode.B) && isGameOver)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+            if (Time.timeScale == 0 && Input.GetKeyDown(KeyCode.M) && isGameOver)
+            {
+                SceneManager.LoadScene(0);
+            }
+        }
     }
 
     void PopulatePowerUp_UI()

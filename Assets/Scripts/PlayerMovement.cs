@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        audio = GameObject.FindGameObjectWithTag("Manager").GetComponent<AudioSource>();
+        //audio = manager.GetComponent<AudioSource>();
         shieldField.SetActive(false);
     }
 
@@ -93,10 +93,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void DestroyTank()
     {
-        if (playerArmor == 0)
+        if (playerArmor <= 0)
         {
-            Transform pos = tankExplodePosition();
-            manager.MakeExplode(pos);
+            manager.MakeExplode(tankExplodePosition());
+            manager.isGameOver=true;
             audio.PlayOneShot(explodeSound);
             Destroy(this.gameObject);
         }
