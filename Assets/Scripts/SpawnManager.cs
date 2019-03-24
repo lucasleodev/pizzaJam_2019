@@ -34,7 +34,7 @@ public class SpawnManager : MonoBehaviour
     {
         while (!isGameOver)
         {
-            yield return new WaitForSeconds(Random.Range(3f, 6f));
+            yield return new WaitForSeconds(Random.Range(1f, 3f));
             posX = Random.Range(-9, 9);
             posY = Random.Range(-9, 9);
             Instantiate(enemy, new Vector3(posX, 3, posY), Quaternion.identity);
@@ -45,10 +45,10 @@ public class SpawnManager : MonoBehaviour
     {
         while (!isGameOver)
         {
-            yield return new WaitForSeconds(Random.Range(6f, 24f));
+            yield return new WaitForSeconds(Random.Range(6f, 18f));
             posX = Random.Range(-9, 9);
             posY = Random.Range(-9, 9);
-            int option = (int)Random.Range(0f, 2f);
+            int option = (int)Random.Range(0f, 3f);
             switch (option)
             {
                 case 0:
@@ -68,11 +68,11 @@ public class SpawnManager : MonoBehaviour
     {
         while (!isGameOver)
         {
-            yield return new WaitForSeconds(Random.Range(5f, 15f));
-            posX = Random.Range(-7, 7);
-            posY = Random.Range(-7, 7);
-            int option = (int)Random.Range(0f, 2f);
-            int rotate = Random.Range(0, 1);
+            yield return new WaitForSeconds(Random.Range(1f, 3f));
+            posX = Random.Range(-9, 9);
+            posY = Random.Range(-9, 9);
+            int option = (int)Random.Range(0f, 3f);
+            int rotate = Random.Range(0, 2);
             switch (option)
             {
                 case 0:

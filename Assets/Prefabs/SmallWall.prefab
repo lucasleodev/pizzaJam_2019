@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 7542573534816801530}
   - component: {fileID: 7542573534816801531}
   - component: {fileID: 4209890790535307471}
+  - component: {fileID: 1060400176119012673}
   m_Layer: 0
   m_Name: SmallWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -304,9 +305,9 @@ MeshCollider:
   m_GameObject: {fileID: 7542573534816801528}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 0}
 --- !u!114 &4209890790535307471
@@ -321,3 +322,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a74a6dc5f0a25ca42bda61644ebfd99b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &1060400176119012673
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7542573534816801528}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 2}
+  m_Center: {x: 0.5, y: 0.5, z: -1}

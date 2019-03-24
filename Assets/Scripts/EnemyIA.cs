@@ -7,7 +7,7 @@ public class EnemyIA : MonoBehaviour
     public new AudioSource audio;
     public AudioClip explode;
     public GameObject playerPosition;
-    public float enemySpeed = 5f;
+    public float enemySpeed = 7f;
 
     public GameLogicManager manager;
 
@@ -45,7 +45,10 @@ public class EnemyIA : MonoBehaviour
         {
             manager.MakeExplode(enemyExplodePosition());
             audio.PlayOneShot(explode, 0.7f);
-            manager.AddScore();
+            if (collision.gameObject.tag != "Wall")
+            {
+                manager.AddScore();
+            }
             Destroy(this.gameObject);
         }
     }

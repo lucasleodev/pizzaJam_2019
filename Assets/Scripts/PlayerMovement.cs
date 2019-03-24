@@ -133,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator TurnOnTurbo()
     {
-        _normalSpeed *= 3f;
+        _normalSpeed *= 2f;
         yield return new WaitForSeconds(15f);
         _normalSpeed = 3f;
         turboActive = false;

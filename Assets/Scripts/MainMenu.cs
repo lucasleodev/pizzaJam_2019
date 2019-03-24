@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour
     void Update()
     {
         PlayGame();
+        CloseGame();
     }
 
     void PlayGame()
