@@ -27,6 +27,9 @@ public class GameLogicManager : MonoBehaviour
     float shieldTime = 0f, tripleTime = 0f, turboTime = 0f;
     float maxPowerUpTime = 15f;
 
+    public float MaxTime = 15f;
+    public float ActiveTime = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +42,7 @@ public class GameLogicManager : MonoBehaviour
     {
         UpdateArmor();
         UpdateScore();
+        PopulatePowerUp_UI();
     }
 
     public void AddScore()
@@ -77,5 +81,41 @@ public class GameLogicManager : MonoBehaviour
     {
         Instantiate(explosion, pos.position, Quaternion.identity);
         explosion.Play();
+    }
+
+    void PopulatePowerUp_UI()
+    {
+        if(player.shieldActive)
+        {
+            shieldTime += Time.deltaTime;
+            float percent = shieldTime / maxPowerUpTime;
+            shieldPU.fillAmount = Mathf.Lerp(1, 0, percent);
+        }
+        else
+        {
+            shieldTime = 0f;
+        }
+
+        if (player.tripleShootActive)
+        {
+            tripleTime += Time.deltaTime;
+            float percent = tripleTime / maxPowerUpTime;
+            tripleShootPU.fillAmount = Mathf.Lerp(1, 0, percent);
+        }
+        else
+        {
+            tripleTime = 0f;
+        }
+
+        if (player.turboActive)
+        {
+            turboTime += Time.deltaTime;
+            float percent = turboTime / maxPowerUpTime;
+            turboPU.fillAmount = Mathf.Lerp(1, 0, percent);
+        }
+        else
+        {
+            turboTime = 0f;
+        }
     }
 }

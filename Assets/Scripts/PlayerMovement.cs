@@ -50,12 +50,14 @@ public class PlayerMovement : MonoBehaviour
             case "Turbo(Clone)":
                 if (!turboActive)
                 {
+                    turboActive = true;
                     StartCoroutine(TurnOnTurbo());
                 }
                 break;
             case "TripleShoot(Clone)":
                 if (!tripleShootActive)
                 {
+                    tripleShootActive = true;
                     StartCoroutine(TurnOnTripleShoot());
                 }
                 break;
@@ -93,7 +95,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (playerArmor == 0)
         {
-            manager.MakeExplode(tankExplodePosition());
+            Transform pos = tankExplodePosition();
+            manager.MakeExplode(pos);
             audio.PlayOneShot(explodeSound);
             Destroy(this.gameObject);
         }
@@ -124,24 +127,16 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator TurnOnTripleShoot()
     {
-        tripleShootActive = true;
-        if (tripleShootActive)
-        {
-            yield return new WaitForSeconds(15f);
-            tripleShootActive = false;
-        }
+        yield return new WaitForSeconds(15f);
+        tripleShootActive = false;
     }
 
     IEnumerator TurnOnTurbo()
     {
-        turboActive = true;
-        if (turboActive)
-        {
-            _normalSpeed *= 2f;
-            yield return new WaitForSeconds(15f);
-            _normalSpeed = 3f;
-            turboActive = false;
-        }
+        _normalSpeed *= 3f;
+        yield return new WaitForSeconds(15f);
+        _normalSpeed = 3f;
+        turboActive = false;
     }
 
     IEnumerator TurnOnShield()
