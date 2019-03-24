@@ -24,4 +24,12 @@ public class MainMenu : MonoBehaviour
             SceneManager.LoadScene(1);
         }
     }
+
+    void CloseGame()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape) && Application.platform != RuntimePlatform.WebGLPlayer)
+        {
+            Application.Quit(); 
+        }
+    }
 }

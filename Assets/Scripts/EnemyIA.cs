@@ -7,7 +7,7 @@ public class EnemyIA : MonoBehaviour
     public new AudioSource audio;
     public AudioClip explode;
     public GameObject playerPosition;
-    public float enemySpeed = 4f;
+    public float enemySpeed = 5f;
 
     public GameLogicManager manager;
 

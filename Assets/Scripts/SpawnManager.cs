@@ -32,7 +32,7 @@ public class SpawnManager : MonoBehaviour
     {
         while (!isGameOver)
         {
-            yield return new WaitForSeconds(Random.Range(4f, 12f));
+            yield return new WaitForSeconds(Random.Range(3f, 6f));
             posX = Random.Range(-9, 9);
             posY = Random.Range(-9, 9);
             Instantiate(enemy, new Vector3(posX, 3, posY), Quaternion.identity);
@@ -43,10 +43,10 @@ public class SpawnManager : MonoBehaviour
     {
         while (!isGameOver)
         {
-            yield return new WaitForSeconds(Random.Range(9, 35));
+            yield return new WaitForSeconds(Random.Range(6f, 24f));
             posX = Random.Range(-9, 9);
             posY = Random.Range(-9, 9);
-            int option = Random.Range(0, 2);
+            int option = (int)Random.Range(0f, 2f);
             switch (option)
             {
                 case 0:

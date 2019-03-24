@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     //THE DOOM - Domination OffTerrain OnTheGo Maquinary, AKA Heavy Dog
 
-    public float _normalSpeed = 3f;
+    public float _normalSpeed = 2f;
     public new AudioSource audio;
     public AudioClip shootSound, explodeSound;
     public GameObject bullet;
