@@ -27,8 +27,7 @@ public class GameLogicManager : MonoBehaviour
     float shieldTime = 0f, tripleTime = 0f, turboTime = 0f;
     float maxPowerUpTime = 15f;
 
-    public float MaxTime = 15f;
-    public float ActiveTime = 0f;
+    public GameObject pauseMenuUI;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +42,7 @@ public class GameLogicManager : MonoBehaviour
         UpdateArmor();
         UpdateScore();
         PopulatePowerUp_UI();
+        PauseMenu();
     }
 
     public void AddScore()
@@ -66,10 +66,12 @@ public class GameLogicManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             Time.timeScale = 0f;
+            //pauseMenuUI.SetActive(true);
         }
         if (Time.timeScale == 0 && Input.GetKeyDown(KeyCode.B))
         {
             Time.timeScale = 1f;
+            pauseMenuUI.SetActive(false);
         }
         if (Time.timeScale == 0 && Input.GetKeyDown(KeyCode.M))
         {
@@ -118,4 +120,5 @@ public class GameLogicManager : MonoBehaviour
             turboTime = 0f;
         }
     }
+
 }
